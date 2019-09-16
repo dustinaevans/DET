@@ -23,8 +23,8 @@ class S(BaseHTTPRequestHandler):
             try:
                 data = base64.b64decode(urllib.unquote(tmp[1]))
                 app_exfiltrate.retrieve_data(data)
-            except Exception, e:
-                print e
+            except Exception as e:
+                print(e)
                 pass
 
     def do_GET(self):
@@ -33,7 +33,7 @@ class S(BaseHTTPRequestHandler):
         try:
             data = base64.b64decode(string)
             app_exfiltrate.retrieve_data(data)
-        except Exception, e:
+        except Exception as e:
             pass
 
 
