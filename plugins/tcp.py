@@ -43,7 +43,7 @@ def listen():
                     app_exfiltrate.log_message(
                         'info', "[tcp] Received {} bytes".format(len(data)))
                     try:
-                        data = data.decode('hex')
+                        data = data.decode()
                         app_exfiltrate.retrieve_data(data)
                     except Exception as e:
                         app_exfiltrate.log_message(
