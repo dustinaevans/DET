@@ -28,7 +28,7 @@
   "AES_KEY": "THISISACRAZYKEY",
   "max_time_sleep": 5,
   "min_time_sleep": 1,
-  "max_bytes_read": 300,
+  "max_bytes_read": 900,
   "min_bytes_read": 200,
   "compression": 1
 }
