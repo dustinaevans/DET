@@ -1,13 +1,13 @@
 import requests
 import base64
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import http.server
 import urllib
 
 config = None
 app_exfiltrate = None
 
 
-class S(BaseHTTPRequestHandler):
+class S(http.server.BaseHTTPRequestHandler):
 
     def _set_headers(self):
         self.send_response(200)
@@ -49,7 +49,7 @@ def listen():
     app_exfiltrate.log_message('info', "[http] Starting httpd...")
     try:
         server_address = ('', config['port'])
-        httpd = HTTPServer(server_address, S)
+        httpd = http.server.HTTPServer(server_address, S)
         httpd.serve_forever()
     except:
         app_exfiltrate.log_message(
