@@ -15,7 +15,7 @@ def send(data):
 
 def listen():
     app_exfiltrate.log_message(
-        'info', "[{1}] Waiting for DNS packets for domain {0}".format(config['key'],appname))
+        'info', "[{1}] Some interesting message {0}".format(config['key'],appname))
     #listen logic
 
 

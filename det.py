@@ -20,7 +20,7 @@ KEY = ""
 MIN_TIME_SLEEP = 1
 MAX_TIME_SLEEP = 30
 MIN_BYTES_READ = 1
-MAX_BYTES_READ = 500
+MAX_BYTES_READ = 400
 COMPRESSION    = True
 files = {}
 threads = []
@@ -191,7 +191,7 @@ class Exfiltration(object):
         fname = files[jobid]['filename']
         filename = "%s.%s" % (fname.replace(
             os.path.pathsep, ''), time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()))
-        content = ''.join(str(v) for v in files[jobid]['data']).decode('hex')
+        content = ''.join(str(v) for v in files[jobid]['data']).decode()
         content = aes_decrypt(content, self.KEY)
         if COMPRESSION:
             content = decompress(content)
