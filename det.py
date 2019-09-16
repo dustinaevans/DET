@@ -68,7 +68,8 @@ def aes_encrypt(message, key=KEY):
 
         # Return data size, iv and encrypted message
         return iv + aes.encrypt(pad(message))
-    except:
+    except Exception as e:
+        print(e)
         return None
 
 def aes_decrypt(message, key=KEY):
@@ -93,7 +94,7 @@ def md5(fname):
     hash = hashlib.md5()
     with open(fname) as f:
         for chunk in iter(lambda: f.read(4096), ""):
-            hash.update(chunk)
+            hash.update(chunk.encode())
     return hash.hexdigest()
 
 
@@ -154,7 +155,7 @@ class Exfiltration(object):
             function_mapping[mode](message)
 
     def get_random_plugin(self):
-        plugin_name = random.sample(self.plugins, 1)[0]
+        plugin_name = random.sample(list(self.plugins), 1)[0]
         return plugin_name, self.plugins[plugin_name]['send']
 
     def use_plugin(self, plugins):
