@@ -45,7 +45,7 @@ def listen():
                     try:
                         data = data.decode('hex')
                         app_exfiltrate.retrieve_data(data)
-                    except Exception, e:
+                    except Exception as e:
                         app_exfiltrate.log_message(
                             'warning', "[tcp] Failed decoding message {}".format(e))
                 else:
