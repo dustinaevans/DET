@@ -28,7 +28,7 @@ def handle_dns_packet(x):
             if (len(qname) < 68):
                 app_exfiltrate.retrieve_data(''.join(buf[jobid]).decode('hex'))
                 buf[jobid] = []
-    except Exception, e:
+    except Exception as e:
         # print e
         pass
 
