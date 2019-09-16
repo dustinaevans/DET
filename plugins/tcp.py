@@ -12,7 +12,7 @@ def send(data):
         'info', "[tcp] Sending {0} bytes to {1}".format(len(data), target))
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((target, port))
-    client_socket.send(data.encode('hex'))
+    client_socket.send(data.encode())
     client_socket.close()
 
 

