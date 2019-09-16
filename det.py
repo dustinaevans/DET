@@ -260,7 +260,7 @@ class ExfiltrateFile(threading.Thread):
         data = e.read()
         if COMPRESSION:
             data = compress(data)
-        f.write(aes_encrypt(data, self.exfiltrate.KEY))
+        f.write(aes_encrypt(data.encode(), self.exfiltrate.KEY))
         f.seek(0)
         e.close()
 
