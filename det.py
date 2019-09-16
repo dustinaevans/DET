@@ -43,7 +43,7 @@ def display_message(message):
 
 
 def warning(message):
-    display_message("%s%s%s" % (bcolors.ERROR, message, bcolors.ENDC))
+    display_message("%s%s%s" % (bcolors.WARNING, message, bcolors.ENDC))
 
 
 def ok(message):
