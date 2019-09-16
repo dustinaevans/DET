@@ -23,7 +23,7 @@
     },
     "icmp": {
       "target": "192.168.0.12"
-    },
+    }
   },
   "AES_KEY": "THISISACRAZYKEY",
   "max_time_sleep": 10,
