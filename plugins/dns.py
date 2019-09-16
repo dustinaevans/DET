@@ -2,7 +2,7 @@ from dnslib import *
 try:
     from scapy.all import *
 except:
-    print "You should install Scapy if you run the server.."
+    print("You should install Scapy if you run the server..")
 
 app_exfiltrate = None
 config = None
