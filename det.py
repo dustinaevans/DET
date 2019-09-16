@@ -67,7 +67,7 @@ def aes_encrypt(message, key=KEY):
         pad = lambda s: s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size).encode()
 
         # Return data size, iv and encrypted message
-        return iv.encode() + aes.encrypt(pad(message))
+        return iv + aes.encrypt(pad(message))
     except Exception as e:
         print("function AES_ENCRYPT",e)
         return None
@@ -261,7 +261,7 @@ class ExfiltrateFile(threading.Thread):
         data = e.read()
         if COMPRESSION:
             data = compress(data)
-        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY).encode())
+        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY))
         f.seek(0)
         e.close()
 
