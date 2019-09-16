@@ -39,7 +39,7 @@ class bcolors:
 
 
 def display_message(message):
-    print "[%s] %s" % (time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()), message)
+    print("[%s] %s" % (time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()), message))
 
 
 def warning(message):
@@ -316,7 +316,7 @@ def main():
     results = parser.parse_args()
 
     if (results.config is None):
-        print "Specify a configuration file!"
+        print("Specify a configuration file!")
         parser.print_help()
         sys.exit(-1)
 
