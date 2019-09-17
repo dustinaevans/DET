@@ -14,11 +14,11 @@
       "port": 53
     },
     "tcp": {
-      "target": "52.91.232.141",
+      "target": "127.0.0.1",
       "port": 6969
     },
     "udp": {
-      "target": "52.91.232.141",
+      "target": "127.0.0.1",
       "port": 6969
     },
     "icmp": {
@@ -26,9 +26,9 @@
     }
   },
   "AES_KEY": "THISISACRAZYKEY",
-  "max_time_sleep": 5,
-  "min_time_sleep": 1,
-  "max_bytes_read": 900,
-  "min_bytes_read": 200,
+  "max_time_sleep": 1,
+  "min_time_sleep": 0,
+  "max_bytes_read": 4000,
+  "min_bytes_read": 2000,
   "compression": 1
 }
