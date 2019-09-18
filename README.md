@@ -25,7 +25,7 @@ This repo is forked from https://github.com/sensepost/DET and has been modified 
 Clone the repo:
 
 ```bash
-git clone https://github.com/sensepost/DET.git
+git clone https://github.com/dustinaevans/DET
 ```
 
 Then:
