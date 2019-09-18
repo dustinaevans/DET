@@ -7,33 +7,17 @@ DET (is provided AS IS), is a proof of concept to perform Data Exfiltration usin
 
 The idea was to create a generic toolkit to plug any kind of protocol/service to test implmented Network Monitoring and Data Leakage Prevention (DLP) solutions configuration, against different data exfiltration techniques.
 
-The primary repository has now moved to [here](https://github.com/PaulSec/DET).
-
-# Slides
-
-DET has been presented at [BSides Ljubljana](https://bsidesljubljana.si/) on the 9th of March 2016 and the slides will be available here.
-Slides are available [here](https://docs.google.com/presentation/d/11uk6d-xougn3jU1wu4XRM3ZGzitobScSSMUlx0MRTzg).
+This repo is forked from https://github.com/sensepost/DET and has been modified to meet my needs. Feel free to fork and make a pull request if you want to help add features.
 
 # Example usage (ICMP plugin)
 
 ## Server-side:
 
-```python det.py -p tcp,udp -c config-sample.json -L```
+```python det.py -p tcp -c config-sample.json -L```
 
 ## Client-side:
 
 ```python det.py -c config-sample.json -p tcp -f requirements.txt```
-
-
-# Usage while combining two channels (Gmail/Twitter)
-
-## Server-side:
-
-[![asciicast](https://asciinema.org/a/9lfpo9m47y5sglvdd1kyb1lwj.png)](https://asciinema.org/a/9lfpo9m47y5sglvdd1kyb1lwj)
-
-## Client-side:
-
-[![asciicast](https://asciinema.org/a/bfstssgptxd41ncces4981cn6.png)](https://asciinema.org/a/bfstssgptxd41ncces4981cn6)
 
 
 # Installation
