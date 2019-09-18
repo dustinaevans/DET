@@ -14,6 +14,7 @@ from random import randint
 from os import listdir
 from os.path import isfile, join
 from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
 from zlib import compress, decompress
 
 KEY = ""
@@ -63,31 +64,37 @@ def aes_encrypt(message, key=KEY):
         # Derive AES key from passphrase
         aes = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
 
-        # Add PKCS5 padding
-        pad = lambda s: s + (AES.block_size - len(s) % AES.block_size) * chr(AES.block_size - len(s) % AES.block_size).encode()
-
         # Return data size, iv and encrypted message
-        return iv + aes.encrypt(pad(message))
+        return iv + aes.encrypt(pad(message,AES.block_size))
     except Exception as e:
-        print("function AES_ENCRYPT",e)
+        print("function AES_ENCRYPT ",e)
         return None
 
 def aes_decrypt(message, key=KEY):
     try:
+        message = message[0]
+        print('aes_decrypt')
+        print(AES.block_size)
         # Retrieve CBC IV
         iv = message[:AES.block_size]
+        print(iv)
+        print('created iv')
         message = message[AES.block_size:]
-
+        message = message.encode()
+        print('chunked message')
         # Derive AES key from passphrase
-        aes = AES.new(hashlib.sha256(key).digest(), AES.MODE_CBC, iv)
+        hash = hashlib.sha256(key.encode()).digest()
+        print('created key hash')
+        aes = AES.new(hash, AES.MODE_CBC, iv.encode())
+        print('created new aes object')
+        print(len(message))
         message = aes.decrypt(message)
-
+        print('decrypted message')
         # Remove PKCS5 padding
-        unpad = lambda s: s[:-ord(s[len(s) - 1:])]
-
+        #unpad = lambda s: s[:-ord(s[len(s) - 1:])]
         return unpad(message)
-    except:
-        print("function AES_DECRYPT",e)
+    except Exception as e:
+        print("function AES_DECRYPT ",e,e.__traceback__.tb_lineno)
         return None
 
 # Do a md5sum of the file
@@ -191,7 +198,8 @@ class Exfiltration(object):
         fname = files[jobid]['filename']
         filename = "%s.%s" % (fname.replace(
             os.path.pathsep, ''), time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()))
-        content = ''.join(str(v) for v in files[jobid]['data'])
+        #content = ''.join(v for v in files[jobid]['data'])
+        content = files[jobid]['data']
         content = aes_decrypt(content, self.KEY)
         if COMPRESSION:
             content = decompress(content)
