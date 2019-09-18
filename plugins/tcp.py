@@ -40,6 +40,7 @@ def listen():
             while True:
                 data = connection.recv(65535)
                 if data:
+                    print(data)
                     app_exfiltrate.log_message(
                         'info', "[tcp] Received {} bytes".format(len(data)))
                     try:

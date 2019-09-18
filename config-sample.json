@@ -30,5 +30,5 @@
   "min_time_sleep": 0,
   "max_bytes_read": 4000,
   "min_bytes_read": 2000,
-  "compression": 1
+  "compression": 0
 }

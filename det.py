@@ -62,32 +62,33 @@ def aes_encrypt(message, key=KEY):
         iv = os.urandom(AES.block_size)
 
         # Derive AES key from passphrase
-        aes = AES.new(hashlib.sha256(key.encode()).digest(), AES.MODE_CBC, iv)
-
+        hash = hashlib.sha256(bytes(key,'utf8')).digest()
+        aes = AES.new(hash, AES.MODE_CBC, iv)
         # Return data size, iv and encrypted message
-        return iv + aes.encrypt(pad(message,AES.block_size))
+        print('size before padding:',len(message))
+        message = pad(message,AES.block_size)
+        print('size after padding:',len(message))
+        return iv + aes.encrypt(message)
     except Exception as e:
         print("function AES_ENCRYPT ",e)
         return None
 
 def aes_decrypt(message, key=KEY):
     try:
-        message = message[0]
-        print('aes_decrypt')
+        message = message
+        print('aes_decrypt',message,len(message))
         print(AES.block_size)
         # Retrieve CBC IV
-        iv = message[:AES.block_size]
-        print(iv)
-        print('created iv')
-        message = message[AES.block_size:]
-        message = message.encode()
+        iv = message[2:AES.block_size+2]
+        print('created iv:',iv)
+        message = message[AES.block_size+1:]
+        message = bytes(message,'utf8')
         print('chunked message')
         # Derive AES key from passphrase
-        hash = hashlib.sha256(key.encode()).digest()
+        hash = hashlib.sha256(bytes(key,'utf8')).digest()
         print('created key hash')
-        aes = AES.new(hash, AES.MODE_CBC, iv.encode())
+        aes = AES.new(hash, AES.MODE_CBC, bytes(iv,'utf8'))
         print('created new aes object')
-        print(len(message))
         message = aes.decrypt(message)
         print('decrypted message')
         # Remove PKCS5 padding
@@ -199,7 +200,7 @@ class Exfiltration(object):
         filename = "%s.%s" % (fname.replace(
             os.path.pathsep, ''), time.strftime("%Y-%m-%d.%H:%M:%S", time.gmtime()))
         #content = ''.join(v for v in files[jobid]['data'])
-        content = files[jobid]['data']
+        content = files[jobid]['data'][0]
         content = aes_decrypt(content, self.KEY)
         if COMPRESSION:
             content = decompress(content)
@@ -268,9 +269,10 @@ class ExfiltrateFile(threading.Thread):
         f = tempfile.SpooledTemporaryFile(mode='w+b')
         e = open(self.file_to_send, 'rb')
         data = e.read()
+        print('def run data:', data)
         if COMPRESSION:
             data = compress(data)
-        f.write(aes_encrypt(bytes(data), self.exfiltrate.KEY))
+        f.write(aes_encrypt(data, self.exfiltrate.KEY))
         f.seek(0)
         e.close()
 
